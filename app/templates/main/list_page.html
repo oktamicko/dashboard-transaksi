@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Daftar Pengguna{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Form Entry Section -->
+    <div class="form-section">
+        <h2>Form Entry</h2>
+        <form method="POST" action="{{ url_for('main.submit_master') }}">
+            <label for="name">Nama:</label>
+            <input type="text" id="name" name="name" placeholder="Masukkan nama" required><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Masukkan email" required><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Masukkan password" required><br>
+
+            <label for="role">Role:</label>
+            <select id="role" name="role" required>
+                <option value="anggota" {% if role == 'anggota' %}selected{% endif %}>Anggota</option>
+                <option value="admin" {% if role == 'admin' %}selected{% endif %}>Admin</option>
+            </select><br>
+
+            <input type="submit" value="Kirim">
+        </form>
+    </div>
+
+    <!-- Daftar Pengguna Section -->
+    <div class="list-section">
+        <h2>Daftar Pengguna</h2>
+        <form method="POST" action="{{ url_for('main.list_users') }}">
+            <label for="role">Pilih Role:</label>
+            <select id="role" name="role" onchange="this.form.submit()">
+                <option value="anggota" {% if role == 'anggota' %}selected{% endif %}>Anggota</option>
+                <option value="admin" {% if role == 'admin' %}selected{% endif %}>Admin</option>
+            </select>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>Update</th>   <!-- Kolom Update -->
+                    <th>Delete</th>    <!-- Kolom Delete -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user[1] }}</td>
+                    <td>{{ user[2] }}</td>
+                    <td>
+                        <a href="{{ url_for('main.edit_user', role=role, id=user[0]) }}" class="btn update-btn">Update</a>
+                    </td>
+                    <td>
+                        <form method="POST" action="{{ url_for('main.delete_user', role=role, id=user[0]) }}" style="display:inline;">
+                            <button type="submit" class="btn delete-btn">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

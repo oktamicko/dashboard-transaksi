@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}
+        My Flask App
+      {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="container">
+        <a href="{{ url_for('main.list_users') }}" class="navbar-brand">My Flask App</a>
+        <ul class="navbar-nav">
+          <li>
+            <a href="{{ url_for('main.list_users') }}">Master</a>
+          </li>
+          <li>
+            <a href="{{ url_for('transaksi.transaksi_page') }}">Transaksi</a>
+          </li>
+          <li>
+            <a href="#report">Report</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+      {% block content %}
+        <!-- Konten spesifik halaman -->
+      {% endblock %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+  </body>
+</html>

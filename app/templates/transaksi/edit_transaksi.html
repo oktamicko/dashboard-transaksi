@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Transaksi{% endblock %}
+
+{% block content %}
+<div class="form-section">
+    <h2>Edit Transaksi</h2>
+    <form method="POST" action="{{ url_for('transaksi.edit_transaksi', id=id) }}">
+        <label for="anggota_id">Nama Anggota:</label>
+        <select id="anggota_id" name="anggota_id" required>
+            {% for anggota in anggota_list %}
+            <option value="{{ anggota[0] }}" {% if anggota[0] == transaksi[0] %}selected{% endif %}>{{ anggota[1] }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="admin_id">Nama Admin:</label>
+        <select id="admin_id" name="admin_id" required>
+            {% for admin in admin_list %}
+            <option value="{{ admin[0] }}" {% if admin[0] == transaksi[1] %}selected{% endif %}>{{ admin[1] }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="nama_barang">Nama Barang:</label>
+        <input type="text" id="nama_barang" name="nama_barang" value="{{ transaksi[2] }}" required><br>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" value="{{ transaksi[3] }}" min="1" required><br>
+
+        <label for="harga">Harga:</label>
+        <input type="number" id="harga" name="harga" value="{{ transaksi[4] }}" min="0.01" step="0.01" required><br>
+
+        <input type="submit" value="Update Transaksi">
+    </form>
+</div>
+{% endblock %}
